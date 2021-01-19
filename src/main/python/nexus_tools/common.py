@@ -24,6 +24,13 @@ class NexusOSS:
         else:
             logger.error(f"Health Check: OK = {nexus_root}")
 
+    def get_content_selectors(self):
+        api_version = "beta"
+        get_cs_list = requests.get(self.API_url + f"{api_version}/security/content-selectors",
+                                  auth=(self.user, self.password))
+        logger.error(get_cs_list.status_code)
+        return get_cs_list.text
+
     def create_content_selector(self, name, expression, description=""):
         api_version = "beta"
         create_data = {"name": name, "expression": expression, "description": description}
